@@ -1,0 +1,459 @@
+@extends('user.layouts.app')
+
+@section('title', 'Pet Sitting - Pricing')
+
+@section('content')
+<style>
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5); /* semi-transparent background */
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        background: #fff;
+        padding: 30px 40px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        max-width: 400px;
+        width: 90%;
+        text-align: center;
+        left: 36%;
+        top: 32%;
+    }
+
+    .modal-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    #confirmYes,
+    #confirmNo {
+        padding: 10px 0;
+        width: 31%;
+    }
+
+    .modal-heading {
+        font-size: 24px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 15px;
+        border-bottom: 2px solid #4CAF50;
+        display: inline-block;
+        padding-bottom: 5px;
+    }
+    .modal-close {
+        position: absolute;
+        top: 11px;
+        right: 16px;
+        background: none;
+        border: none;
+        font-size: 20px;
+        font-weight: bold;
+        color: #888;
+        cursor: pointer;
+    }
+
+    .modal-close:hover {
+        color: #333;
+    }
+
+</style>
+
+    <section class="hero-wrap hero-wrap-2" style="background-image: url('images/bg_2.jpg');"
+        data-stellar-background-ratio="0.5">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text align-items-end">
+                <div class="col-md-9 ftco-animate pb-5">
+                    <p class="breadcrumbs mb-2"><span class="mr-2"><a href="index.html">Home <i
+                                    class="ion-ios-arrow-forward"></i></a></span> <span>Pricing <i
+                                class="ion-ios-arrow-forward"></i></span></p>
+                    <h1 class="mb-0 bread">Pricing</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ftco-section bg-light">
+        <div class="container">
+            <div class="row justify-content-center pb-5 mb-3">
+                <div class="col-md-7 heading-section text-center ftco-animate">
+                    <h2>Affordable Packages</h2>
+                </div>
+            </div>
+            <div class="row">
+                @foreach ($planManagement as $planManage)
+                    <div class="col-md-4 ftco-animate">
+                        <div class="block-7" data-plan-id="{{ $planManage->id }}">
+                            <div class="img" style="background-image: url('{{ asset($planManage->image) }}');"></div>
+                            <div class="text-center p-4">
+                                <span class="excerpt d-block">{{ $planManage->plan_name ?? null }}</span>
+                                <span class="price"><sup>$</sup> <span
+                                        class="number">{{ $planManage->amount ?? null }}</span>
+                                    <sub>/<p style="display: none;">{{ $planManage->duration_value ?? null }} - </p>{{ $planManage->duration_unit ?? null }}</sub></span>
+
+                                <ul class="pricing-text mb-5">
+
+                                </ul>
+
+                                <div class="add-feature-input mt-2" style="display:none;">
+                                    <input type="text" class="form-control new-feature-text" id="featureInput"
+                                        placeholder="Enter new feature">
+                                    <small id="featureError" class="text-danger d-none" style="margin-right: -54%;">Please enter a feature.</small><br>
+                                    <button type="button" class="btn btn-success btn-confirm-feature mt-2">Add</button>
+                                    <button type="button" class="btn btn-danger btn-cancel-feature mt-2">Cancel</button>
+                                </div>
+
+                                <button type="button" class="btn btn-secondary btn-add-feature">Add New Feature</button>
+                                {{--  <a href="#" class="btn btn-primary d-block px-2 py-3 mt-3">Get Started</a>  --}}
+                               <a href="#" class="btn btn-primary d-block px-2 py-3 mt-3 btn-get-started" style="display: none !important;">Get Started</a>
+
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+    <section class="ftco-appointment ftco-section ftco-no-pt ftco-no-pb img"
+        style="background-image: url(images/bg_3.jpg);">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row d-md-flex justify-content-end">
+                <div class="col-md-12 col-lg-6 half p-3 py-5 pl-lg-5 ftco-animate">
+                    <h2 class="mb-4">Free Consultation</h2>
+                    <form action="#" class="appointment">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="form-field">
+                                        <div class="select-wrap">
+                                            <div class="icon"><span class="fa fa-chevron-down"></span></div>
+                                            <select name="" id="" class="form-control">
+                                                <option value="">Select services</option>
+                                                <option value="">Cat Sitting</option>
+                                                <option value="">Dog Walk</option>
+                                                <option value="">Pet Spa</option>
+                                                <option value="">Pet Grooming</option>
+                                                <option value="">Pet Daycare</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Your Name">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Vehicle number">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="input-wrap">
+                                        <div class="icon"><span class="fa fa-calendar"></span></div>
+                                        <input type="text" class="form-control appointment_date" placeholder="Date">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="input-wrap">
+                                        <div class="icon"><span class="fa fa-clock-o"></span></div>
+                                        <input type="text" class="form-control appointment_time" placeholder="Time">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <textarea name="" id="" cols="30" rows="7" class="form-control" placeholder="Message"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="submit" value="Send message" class="btn btn-primary py-3 px-4">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+       
+
+    </section>
+    <!-- Confirmation Modal -->
+    <div id="priceConfirmModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-content">
+            <button type="button" class="modal-close" id="closeModalBtn">X</button>
+            <h2 class="modal-heading">Notice</h2>
+            <p style="color:red;">Are you sure? The price will increase by $49.</p>
+            <div class="modal-buttons">
+                <button type="button" id="confirmYes" class="btn btn-primary">Yes</button>
+                <button type="button" id="confirmNo" class="btn btn-secondary">No</button>
+            </div>
+        </div>
+    </div>
+
+@endsection
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        let pendingFeature = null;
+        let pendingBlock = null;
+
+        $('.btn-add-feature').on('click', function () {
+            var $block = $(this).closest('.block-7');
+            $block.find('.add-feature-input').show();
+            $(this).hide();
+            $block.find('.new-feature-text').focus();
+        });
+
+        $('.btn-cancel-feature').on('click', function () {
+            var $block = $(this).closest('.block-7');
+            $block.find('.add-feature-input').hide();
+            $block.find('.btn-add-feature').show();
+            $block.find('.new-feature-text').val('');
+            $block.find('.new-feature-text').removeClass('is-invalid');
+            $block.find('#featureError').addClass('d-none');
+        });
+
+        $('.btn-confirm-feature').on('click', function () {
+            var $block = $(this).closest('.block-7');
+            var newFeature = $block.find('.new-feature-text').val().trim();
+
+            if (newFeature.length === 0) {
+                const input = document.getElementById('featureInput');
+                const error = document.getElementById('featureError');
+                if (input.value.trim() === '') {
+                    error.classList.remove('d-none');
+                    input.classList.add('is-invalid');
+                } else {
+                    error.classList.add('d-none');
+                    input.classList.remove('is-invalid');
+                }
+                return;
+            }
+
+            var $ul = $block.find('.pricing-text');
+            var currentCount = $ul.find('li').length;
+
+            if (currentCount === 5) {
+                pendingFeature = newFeature;
+                pendingBlock = $block;
+                $('#priceConfirmModal').show();
+                return;
+            }
+
+            appendFeature($block, newFeature);
+            updatePrice($block);
+        });
+
+        $('#closeModalBtn').on('click',function() {
+            $('#priceConfirmModal').hide();
+        });
+
+        $('#confirmYes').on('click', function () {
+            if (pendingFeature && pendingBlock) {
+                appendFeature(pendingBlock, pendingFeature);
+                updatePrice(pendingBlock);
+            }
+            pendingFeature = null;
+            pendingBlock = null;
+            $('#priceConfirmModal').hide();
+        });
+
+        $('#confirmNo').on('click', function () {
+            pendingFeature = null;
+            pendingBlock = null;
+            $('#priceConfirmModal').hide();
+        });
+
+        function appendFeature($block, featureText) {
+            var newLi = `
+                <li>
+                    <span class="fa fa-check mr-2"></span>${featureText}
+                    <button type="button" class="btn btn-sm btn-danger btn-delete-feature float-right" style="margin-top: -3%;">X</button>
+                </li>
+            `;
+            $block.find('.pricing-text').append(newLi);
+            $block.find('.new-feature-text').val('');
+            $block.find('.add-feature-input').hide();
+            $block.find('.btn-add-feature').show();
+            $block.find('.btn-get-started').show();
+        }
+
+        function updatePrice($block) {
+            var $features = $block.find('.pricing-text li');
+            var $priceElement = $block.find('.number');
+            var baseAmount = parseFloat($priceElement.data('base'));
+
+            if (isNaN(baseAmount)) {
+                baseAmount = parseFloat($priceElement.text().trim());
+                $priceElement.data('base', baseAmount); // store base price once
+            }
+
+            if ($features.length > 5) {
+                $priceElement.text((baseAmount + 49).toFixed(2));
+            } else {
+                $priceElement.text(baseAmount.toFixed(2));
+            }
+        }
+
+        $(document).on('keypress', '.new-feature-text', function (e) {
+            if (e.which === 13) {
+                e.preventDefault();
+                $(this).siblings('.btn-confirm-feature').click();
+            }
+        });
+
+        $(document).on('click', '.btn-delete-feature', function () {
+            var $block = $(this).closest('.block-7');
+            $(this).closest('li').remove();
+            updatePrice($block);
+        });
+
+        // AJAX Submit
+        $('.btn-get-started').on('click', function (e) {
+            e.preventDefault();
+            const $block = $(this).closest('.block-7');
+            const planId = $block.data('plan-id');
+            const planName = $block.find('.excerpt').text().trim();
+            const amount = $block.find('.number').text().trim();
+            const duration = $block.find('sub').text().trim();
+            const features = [];
+
+            $block.find('.pricing-text li').each(function () {
+                features.push($(this).text().replace('X', '').trim());
+            });
+
+            const form = $('<form>', {
+                action: '{{ route('user.plan_details') }}',
+                method: 'GET'
+            });
+
+            form.append('@csrf');
+            form.append($('<input>', { type: 'hidden', name: 'plan_id', value: planId }));
+            form.append($('<input>', { type: 'hidden', name: 'plan_name', value: planName }));
+            form.append($('<input>', { type: 'hidden', name: 'amount', value: amount }));
+            form.append($('<input>', { type: 'hidden', name: 'duration', value: duration }));
+            form.append($('<input>', { type: 'hidden', name: 'features', value: JSON.stringify(features) }));
+
+            $('body').append(form);
+            form.submit();
+        });
+    });
+</script>
+
+{{-- jquery
+<script>
+    $(document).ready(function() {
+        $('.btn-add-feature').on('click', function() {
+            var $block = $(this).closest('.block-7');
+            $block.find('.add-feature-input').show();
+            $(this).hide();
+            $block.find('.new-feature-text').focus();
+        });
+
+        $('.btn-cancel-feature').on('click', function() {
+            var $block = $(this).closest('.block-7');
+            $block.find('.add-feature-input').hide();
+            $block.find('.btn-add-feature').show();
+            $block.find('.new-feature-text').val('');
+        });
+
+        $('.btn-confirm-feature').on('click', function() {
+            var $block = $(this).closest('.block-7');
+            var newFeature = $block.find('.new-feature-text').val().trim();
+
+            if (newFeature.length > 0) {
+                var $ul = $block.find('.pricing-text');
+                $ul.append('<li><span class="fa fa-check mr-2"></span>' + newFeature + '</li>');
+
+                $block.find('.new-feature-text').val('');
+                $block.find('.add-feature-input').hide();
+                $block.find('.btn-add-feature').show();
+            } else {
+                alert('Please enter a feature.');
+            }
+        });
+
+        $('.new-feature-text').on('keypress', function(e) {
+            if (e.which === 13) {
+                e.preventDefault();
+                $(this).siblings('.btn-confirm-feature').click();
+            }
+        });
+    });
+</script>  --}}
+
+{{-- javascript
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // When Add New Feature clicked, show input box
+        document.querySelectorAll('.btn-add-feature').forEach(button => {
+            button.addEventListener('click', () => {
+                const container = button.closest('.block-7');
+                container.querySelector('.add-feature-input').style.display = 'block';
+                button.style.display = 'none';
+                container.querySelector('.new-feature-text').focus();
+            });
+        });
+
+        // When Cancel clicked, hide input box
+        document.querySelectorAll('.btn-cancel-feature').forEach(button => {
+            button.addEventListener('click', () => {
+                const container = button.closest('.block-7');
+                container.querySelector('.add-feature-input').style.display = 'none';
+                container.querySelector('.btn-add-feature').style.display = 'inline-block';
+                container.querySelector('.new-feature-text').value = '';
+            });
+        });
+
+        // When Add clicked, add new feature to list
+        document.querySelectorAll('.btn-confirm-feature').forEach(button => {
+            button.addEventListener('click', () => {
+                const container = button.closest('.block-7');
+                const input = container.querySelector('.new-feature-text');
+                const newFeature = input.value.trim();
+                if (newFeature.length > 0) {
+                    const ul = container.querySelector('.pricing-text');
+                    const li = document.createElement('li');
+                    li.innerHTML = `<span class="fa fa-check mr-2"></span>${newFeature}`;
+                    ul.appendChild(li);
+                    // Clear and hide input box, show add button again
+                    input.value = '';
+                    container.querySelector('.add-feature-input').style.display = 'none';
+                    container.querySelector('.btn-add-feature').style.display = 'inline-block';
+                } else {
+                    alert('Please enter a feature.');
+                }
+            });
+        });
+
+        // Optional: allow Enter key to add feature
+        document.querySelectorAll('.new-feature-text').forEach(input => {
+            input.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    input.nextElementSibling.click(); // click Add button
+                }
+            });
+        });
+    });
+</script>  --}}
